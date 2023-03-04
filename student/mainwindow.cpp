@@ -1,0 +1,399 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QFile>
+#include <QKeyEvent>
+#include <QSqlDatabase>
+#include <QRandomGenerator>
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+    , m_ptrstuSql(nullptr)
+{
+    ui->setupUi(this);
+
+    m_dlogin.show();    //主界面显示
+    //this->hide();       //不在主界面显示
+    auto f=[&](){
+        this->show();
+    };
+    connect(&m_dlogin,&Page_login::sendLoginSuccess,this,f);
+
+    ui->treeWidget->setColumnCount(1);
+
+    QStringList l;
+    l<<"学生信息管理系统";
+    QTreeWidgetItem *qf=new QTreeWidgetItem(ui->treeWidget,l);
+    ui->treeWidget->addTopLevelItem(qf);
+
+    l.clear();
+    l<<"学生管理";
+    QTreeWidgetItem *q1=new QTreeWidgetItem(qf,l);
+    qf->addChild(q1);
+
+    l.clear();
+    l<<"管理员管理";
+    QTreeWidgetItem *q2=new QTreeWidgetItem(qf,l);
+    qf->addChild(q2);
+
+    //默认展开列表
+    ui->treeWidget->expandAll();
+    //check qudong
+//    qDebug()<<QSqlDatabase::drivers();
+    ui->stackedWidget->setCurrentIndex(0);
+
+    m_ptrstuSql=stusql::getinstance();
+    m_ptrstuSql->init();    //数据库初始化
+
+    //模拟数据
+    m_lNames<< "开梦山";
+    m_lNames<< "仝沛槐";
+    m_lNames<< "刑帆";
+    m_lNames<< "钱曼文";
+    m_lNames<< "严念念";
+    m_lNames<< "盈举";
+    m_lNames<< "家安荷";
+    m_lNames<< "戎冰洁";
+    m_lNames<< "乾语燕";
+    m_lNames<< "委雪";
+    m_lNames<< "太史";
+    m_lNames<< "圭莞然";
+    m_lNames<< "向慧月";
+    m_lNames<< "羊云英";
+    m_lNames<< "锺离温";
+    m_lNames<< "竭思语";
+    m_lNames<< "波秋灵";
+    m_lNames<< "胡斯斯";
+    m_lNames<< "祖敏慧";
+    m_lNames<< "周榆";
+    m_lNames<< "顿宏壮";
+    m_lNames<< "支子芸";
+    m_lNames<< "铁灵卉";
+    m_lNames<< "狂雪萍";
+    m_lNames<< "边竹筱";
+    m_lNames<< "贾淳";
+    m_lNames<< "公良紫";
+    m_lNames<< "五甜";
+    m_lNames<< "宝跃";
+    m_lNames<< "邶海";
+    m_lNames<< "宏宜欣";
+    m_lNames<< "范念柏";
+    m_lNames<< "豆以彤";
+    m_lNames<< "营婉然";
+    m_lNames<< "容寄柔";
+    m_lNames<< "脱忆灵";
+    m_lNames<< "抄立";
+    m_lNames<< "环天真";
+    m_lNames<< "章佳从";
+    m_lNames<< "赏芙蓉";
+    m_lNames<< "肇修美";
+    m_lNames<< "谷梁芮";
+    m_lNames<< "嵇曼彤";
+    m_lNames<< "光梦露";
+    m_lNames<< "澄竹雨";
+    m_lNames<< "韦帅红";
+    m_lNames<< "菅冷菱";
+    m_lNames<< "越献";
+    m_lNames<< "京昭懿";
+    m_lNames<< "百里鸿";
+    m_lNames<< "钟离芳";
+    m_lNames<< "弘家馨";
+    m_lNames<< "房绿蝶";
+    m_lNames<< "昌莹玉";
+    m_lNames<< "奚磊";
+    m_lNames<< "载含莲";
+    m_lNames<< "赵晨希";
+    m_lNames<< "彤和璧";
+    m_lNames<< "裴莹洁";
+    m_lNames<< "程宛凝";
+    m_lNames<< "本炫明";
+    m_lNames<< "礼博学";
+    m_lNames<< "顾梦秋";
+    m_lNames<< "扈乐天";
+    m_lNames<< "闾和暄";
+    m_lNames<< "官湘云";
+    m_lNames<< "巫天心";
+    m_lNames<< "丙子明";
+    m_lNames<< "农嘉珍";
+    m_lNames<< "英春兰";
+    m_lNames<< "傅安吉";
+    m_lNames<< "析寿";
+    m_lNames<< "衡坚诚";
+    m_lNames<< "乌孙晖";
+    m_lNames<< "召初翠";
+    m_lNames<< "卜凝绿";
+    m_lNames<< "皋沛槐";
+    m_lNames<< "真诗双";
+    m_lNames<< "柴建业";
+    m_lNames<< "在水蓉";
+    m_lNames<< "续天真";
+    m_lNames<< "敬琲";
+    m_lNames<< "伟暮雨";
+    m_lNames<< "纪乐蓉";
+    m_lNames<< "项雪瑶";
+    m_lNames<< "楚柏";
+    m_lNames<< "韩冰双";
+    m_lNames<< "北幼珊";
+    m_lNames<< "逯自强";
+    m_lNames<< "帖悠婉";
+    m_lNames<< "典幼珊";
+    m_lNames<< "宛宏硕";
+    m_lNames<< "天馨兰";
+    m_lNames<< "丁新柔";
+    m_lNames<< "壬静芙";
+    m_lNames<< "权欣悦";
+    m_lNames<< "树亦旋";
+    m_lNames<< "敏千儿";
+    m_lNames<< "蚁晗玥";
+    m_lNames<< "僪柔";
+    m_lNames<< "蓬依萱";
+    m_lNames<< "魏听芹";
+    m_lNames<< "丘笑柳";
+    m_lNames<< "危瑶";
+    m_lNames<< "杞梦寒";
+    m_lNames<< "肥清霁";
+    m_lNames<< "夫尔容";
+    m_lNames<< "西门清";
+    m_lNames<< "连婉娜";
+    m_lNames<< "禚雅达";
+    m_lNames<< "励君";
+    m_lNames<< "巧璇";
+    m_lNames<< "第五平雅";
+    m_lNames<< "蓝昆杰";
+    m_lNames<< "阚怡嘉";
+    m_lNames<< "笃家";
+    m_lNames<< "宁宜人";
+    m_lNames<< "丑蕊珠";
+    m_lNames<< "塔元芹";
+    m_lNames<< "漆雕飞";
+    m_lNames<< "信翰音";
+    m_lNames<< "甄飞薇";
+    m_lNames<< "星雅琴";
+    m_lNames<< "史兴国";
+    m_lNames<< "刚惜萍";
+    m_lNames<< "修螺";
+    m_lNames<< "杜昕月";
+    m_lNames<< "宾雅洁";
+    m_lNames<< "钟依云";
+    m_lNames<< "沈觅松";
+    m_lNames<< "律妙春";
+    m_lNames<< "钦丽华";
+    m_lNames<< "呼忆梅";
+    m_lNames<< "邛听春";
+    m_lNames<< "甫樱";
+    m_lNames<< "何璧";
+    m_lNames<< "盘智阳";
+    m_lNames<< "福格菲";
+    m_lNames<< "斯念寒";
+    m_lNames<< "钞梦竹";
+    m_lNames<< "封雨柏";
+    m_lNames<< "琦赫然";
+    m_lNames<< "孙山梅";
+    m_lNames<< "步紫文";
+    m_lNames<< "淳于涵";
+    m_lNames<< "暨聪睿";
+    m_lNames<< "公羊孤";
+    m_lNames<< "芒山梅";
+    m_lNames<< "泣乐荷";
+    m_lNames<< "其雅容";
+    m_lNames<< "完凝";
+    m_lNames<< "风梦容";
+    m_lNames<< "黎运";
+    m_lNames<< "羽姮娥";
+    m_lNames<< "晏范";
+    m_lNames<< "桥怜雪";
+    m_lNames<< "烟乐蕊";
+    m_lNames<< "呼延峻";
+    m_lNames<< "介听荷";
+    m_lNames<< "乙韵流";
+    m_lNames<< "濮德容";
+    m_lNames<< "辛昊伟";
+    m_lNames<< "千沛山";
+    m_lNames<< "夏侯梓";
+    m_lNames<< "芮芸茗";
+    m_lNames<< "逄奇玮";
+    m_lNames<< "蛮欣愉";
+    m_lNames<< "单于淳";
+    m_lNames<< "释鸿风";
+    m_lNames<< "尤冷萱";
+    m_lNames<< "是语柳";
+    m_lNames<< "翠和怡";
+    m_lNames<< "余暄妍";
+    m_lNames<< "庞清秋";
+    m_lNames<< "德语彤";
+    m_lNames<< "驹斯年";
+    m_lNames<< "石火";
+    m_lNames<< "雀秋柏";
+    m_lNames<< "澹台青";
+    m_lNames<< "泰孤菱";
+    m_lNames<< "说盼芙";
+    m_lNames<< "赖玄素";
+    m_lNames<< "曹北嘉";
+    m_lNames<< "上官承";
+    m_lNames<< "用悦心";
+    m_lNames<< "郝清雅";
+    m_lNames<< "酆旭尧";
+    m_lNames<< "崔思";
+    m_lNames<< "郁瑜";
+    m_lNames<< "米夜卉";
+    m_lNames<< "集伶俐";
+    m_lNames<< "扶之桃";
+    m_lNames<< "萨浩气";
+    m_lNames<< "杭子默";
+    m_lNames<< "仍斯雅";
+    m_lNames<< "定慧月";
+    m_lNames<< "朋翔宇";
+    m_lNames<< "穆忆安";
+    m_lNames<< "竺蒙雨";
+    m_lNames<< "岑晓兰";
+    m_lNames<< "昔睿诚";
+    m_lNames<< "革鸿志";
+    m_lNames<< "淦香岚";
+    m_lNames<< "戏高卓";
+    m_lNames<< "微生书";
+    m_lNames<< "巨晨轩";
+    m_lNames<< "御正阳";
+    m_lNames<< "公瑜敏";
+    m_lNames<< "受寄波";
+    m_lNames<< "敛漫";
+    m_lNames<< "颜通";
+    m_lNames<< "山妙意";
+    m_lNames<< "李凝绿";
+    m_lNames<< "充慕";
+    m_lNames<< "裘亦玉";
+    m_lNames<<"随碧曼";
+    m_lNames<<"桑代容";
+    m_lNames<<"幸如雪";
+    m_lNames<<"温歌阑";
+    m_lNames<<"可慧秀";
+    m_lNames<<"益悦爱";
+    m_lNames<<"肖冰真";
+    m_lNames<<"乌雨安";
+    m_lNames<<"颛孙康";
+    m_lNames<<"花傲旋";
+    m_lNames<<"王罡";
+    m_lNames<<"节怜烟";
+    m_lNames<<"碧鲁水";
+    m_lNames<<"查掣";
+    m_lNames<<"郁今雨";
+    m_lNames<<"冠思思";
+    m_lNames<<"许天赋";
+    m_lNames<<"桂山彤";
+    m_lNames<<"彭娜娜";
+    m_lNames<<"寸欣艳";
+    m_lNames<<"蔡俏丽";
+    m_lNames<<"熊水冬";
+    m_lNames<<"首灵";
+    m_lNames<<"谭彤蕊";
+    m_lNames<<"练骊英";
+    m_lNames<<"汉书兰";
+    m_lNames<<"皇甫言";
+    m_lNames<<"居凌文";
+    m_lNames<<"司宜年";
+    m_lNames<<"以运菱";
+    m_lNames<<"楼庆";
+    m_lNames<<"功可嘉";
+    m_lNames<<"永偲偲";
+    m_lNames<<"夏清润";
+    m_lNames<<"登诗珊";
+    m_lNames<<"止梦槐";
+    m_lNames<<"宰祺瑞";
+    m_lNames<<"申淑华";
+    m_lNames<<"欧雅霜";
+    m_lNames<<"钭艳蕙";
+    m_lNames<<"姒康健";
+    m_lNames<<"善清韵";
+    m_lNames<<"所悦欣";
+    m_lNames<<"仉忆南";
+    m_lNames<<"税心远";
+    m_lNames<<"舜宜春";
+    m_lNames<<"秘秀竹";
+    m_lNames<<"仲孙华";
+    m_lNames<<"邓千柳";
+    m_lNames<<"洋光亮";
+    m_lNames<<"斛阑";
+    m_lNames<<"卑池";
+
+    //数据显示
+    auto stuSum=m_ptrstuSql->getSum();
+    QList<studentInfo> lStuInfo=m_ptrstuSql->getPageData(1,stuSum);
+
+//    ui->tableWidget->clear();   //初始化
+    ui->tableWidget->setRowCount(stuSum);
+    ui->lb_sum->setText(QString("学生总数：%1").arg(stuSum));
+
+    for(quint32 i=0;i<stuSum;i++){
+        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i+1)));
+        ui->tableWidget->setItem(i,1,new QTableWidgetItem(lStuInfo[i].name));
+        ui->tableWidget->setItem(i,2,new QTableWidgetItem(QString::number(lStuInfo[i].age)));
+        ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(lStuInfo[i].grade)));
+        ui->tableWidget->setItem(i,4,new QTableWidgetItem(QString::number(lStuInfo[i].stu_class)));
+        ui->tableWidget->setItem(i,5,new QTableWidgetItem(QString::number(lStuInfo[i].studentid)));
+        ui->tableWidget->setItem(i,6,new QTableWidgetItem(lStuInfo[i].phone));
+        ui->tableWidget->setItem(i,7,new QTableWidgetItem(lStuInfo[i].wechat));
+
+    }
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key()==Qt::Key_F6)
+    {
+        QFile f;
+        auto str=QCoreApplication::applicationDirPath();
+//        qDebug()<<str;
+        f.setFileName(str+"/stuQss.css");
+        f.open(QIODevice::ReadOnly);    //只读,true
+        QString strQss=f.readAll();
+        this->setStyleSheet(strQss);
+        m_dlogin.setStyleSheet(strQss);
+    }
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    exit(0);
+}
+
+
+void MainWindow::on_btn_simulation_clicked()
+{
+    QRandomGenerator a,g,c;
+    g.seed(0);
+    g.seed(0);
+    //制作一千条学生数据，模拟数据
+    for(int i=0;i<m_lNames.size();i++){
+        studentInfo info;
+        info.name=m_lNames[i];
+        //生成伪随机数
+        info.age=a.bounded(18,25);
+        info.grade=g.bounded(1,5);
+        info.stu_class=c.bounded(1,11);
+//        if(i%3){
+//            info.name=QString("张%1").arg(i);
+//            info.age=a.bounded(18,25);
+//        }
+//        if(i%7){
+//            info.name=QString("王%1").arg(i);
+//            info.age=a.bounded(18,25);
+
+//        }
+//        if(i%2){
+//            info.name=QString("李%1").arg(i);
+//            info.age=a.bounded(18,25);
+//        }
+        info.studentid=i+1;
+        info.phone="12344433334";
+        info.wechat="12344433334";
+        m_ptrstuSql->addStu(info);
+    }
+
+
+}
