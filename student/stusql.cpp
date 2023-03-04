@@ -76,6 +76,24 @@ quint32 stusql::getSum()
     return stu_Sum;
 }
 
+studentInfo stusql::getSingleData(int index)
+{
+    studentInfo info;
+    QSqlQuery q(m_db);
+    QString strSql=QString("select * from student limit(%1,%2)").arg(index+1).arg(1);
+    q.exec(strSql);
+    info.id=q.value(0).toUInt();
+    info.name=q.value(1).toString();
+    info.age=q.value(2).toUInt();
+    info.grade=q.value(3).toUInt();
+    info.stu_class=q.value(4).toUInt();
+    info.studentid=q.value(5).toUInt();
+    info.phone=q.value(6).toString();
+    info.wechat=q.value(7).toString();
+    return info;
+
+}
+
 QList<studentInfo> stusql::getPageData(quint32 page, quint32 page_count)
 {
     QList<studentInfo> l;
@@ -126,7 +144,7 @@ bool stusql::delStu(quint32 id)
 bool stusql::updateStuInfo(studentInfo info)
 {
     QSqlQuery q(m_db);
-    QString strSql=QString("update student set name = '%1' age=%2 grade=%3 class=%4 studentid=%5 phone='%6' wechat='%7' where id=%8").
+    QString strSql=QString("update student set name ='%1',age=%2,grade=%3,class=%4,studentid=%5,phone='%6',wechat='%7' where id=%8;").
             arg(info.name).
             arg(info.age).
             arg(info.grade).
@@ -135,8 +153,11 @@ bool stusql::updateStuInfo(studentInfo info)
             arg(info.phone).
             arg(info.wechat).
             arg(info.id);
+    qDebug()<<strSql;
+//    qDebug()<<q.exec(strSql);
     //执行sql语句
     return q.exec(strSql);
+
     //检查sql错误
 //    const QSqlError e=q.lastError();
 //    if(e.isvalid()){
@@ -147,9 +168,15 @@ bool stusql::updateStuInfo(studentInfo info)
 bool stusql::clearStuTable()
 {
     QSqlQuery q(m_db);
+     //执行sql语句
     QString strSql=QString("delete from student");
-    //执行sql语句
-    return q.exec(strSql);
+    bool sql1=q.exec(strSql);
+    QString strSql1=QString("delete from sqlite_sequence  where name = 'student'"); //id从0开始递增
+    bool sql2=q.exec(strSql1);
+    if(sql1 && sql2)
+        return true;
+    else
+        return false;
 }
 
 QList<userInfo> stusql::getAllUser()

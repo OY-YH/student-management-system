@@ -43,6 +43,9 @@ public:
     //查询所有学生数量 
     quint32 getSum();
 
+    //获取单个学生数据
+    studentInfo getSingleData(int index);
+
     //查询第几页学生数据 page为页数，page_count为一页的学生数
     QList<studentInfo> getPageData(quint32 page,quint32 page_count);
 

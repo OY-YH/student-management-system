@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <QSqlDatabase>
 #include <QRandomGenerator>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -314,25 +315,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_lNames<<"斛阑";
     m_lNames<<"卑池";
 
-    //数据显示
-    auto stuSum=m_ptrstuSql->getSum();
-    QList<studentInfo> lStuInfo=m_ptrstuSql->getPageData(1,stuSum);
-
-//    ui->tableWidget->clear();   //初始化
-    ui->tableWidget->setRowCount(stuSum);
-    ui->lb_sum->setText(QString("学生总数：%1").arg(stuSum));
-
-    for(quint32 i=0;i<stuSum;i++){
-        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i+1)));
-        ui->tableWidget->setItem(i,1,new QTableWidgetItem(lStuInfo[i].name));
-        ui->tableWidget->setItem(i,2,new QTableWidgetItem(QString::number(lStuInfo[i].age)));
-        ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(lStuInfo[i].grade)));
-        ui->tableWidget->setItem(i,4,new QTableWidgetItem(QString::number(lStuInfo[i].stu_class)));
-        ui->tableWidget->setItem(i,5,new QTableWidgetItem(QString::number(lStuInfo[i].studentid)));
-        ui->tableWidget->setItem(i,6,new QTableWidgetItem(lStuInfo[i].phone));
-        ui->tableWidget->setItem(i,7,new QTableWidgetItem(lStuInfo[i].wechat));
-
-    }
+    updateTable();
+    ui->tableWidget->viewport()->update();
 
 }
 
@@ -354,12 +338,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         this->setStyleSheet(strQss);
         m_dlogin.setStyleSheet(strQss);
     }
-}
-
-
-void MainWindow::on_pushButton_clicked()
-{
-    exit(0);
 }
 
 
@@ -389,7 +367,7 @@ void MainWindow::on_btn_simulation_clicked()
 //            info.name=QString("李%1").arg(i);
 //            info.age=a.bounded(18,25);
 //        }
-        info.studentid=i+1;
+        info.studentid=info.grade*10+info.stu_class;
         info.phone="12344433334";
         info.wechat="12344433334";
         m_ptrstuSql->addStu(info);
@@ -397,3 +375,102 @@ void MainWindow::on_btn_simulation_clicked()
 
 
 }
+
+void MainWindow::on_btn_add_clicked()
+{
+    //显示增加学生信息的窗口（模态对话框)
+    m_dlgAddStu.setType(true);
+    m_dlgAddStu.exec();
+    updateTable();      //刷新数据，效率比较低
+}
+
+
+void MainWindow::on_btn_clearStu_clicked()
+{
+    m_ptrstuSql->clearStuTable();
+    updateTable();
+}
+
+void MainWindow::updateTable()
+{
+    //初始化
+//    方法1
+    ui->tableWidget->clear();   //初始化后没表头,可把ui设置的表头删除
+    ui->tableWidget->setColumnCount(9);
+    //编写表头
+    QStringList l;
+    l<<"序号"<<"id"<<"姓名"<<"年龄"<<"年级"<<"班级"<<"学号"<<"电话"<<"微信";
+    ui->tableWidget->setHorizontalHeaderLabels(l);
+    //方法2
+//    ui->tableWidget->clearContents();      //只删内容
+
+    //数据显示
+    auto stuSum=m_ptrstuSql->getSum();
+    QList<studentInfo> lStuInfo=m_ptrstuSql->getPageData(1,stuSum);
+
+    ui->tableWidget->setRowCount(stuSum);
+    ui->lb_sum->setText(QString("学生总数：%1").arg(stuSum));
+
+    //只选中行,单行选中   如要多行选中，把第二个注释掉就ok
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    //不可编辑
+    ui->tableWidget->setEditTriggers(QHeaderView::NoEditTriggers);
+
+    for(int i=0;i<lStuInfo.size();i++){
+        ui->tableWidget->setItem(i,0,new QTableWidgetItem(QString::number(i)));
+        ui->tableWidget->setItem(i,1,new QTableWidgetItem(QString::number(lStuInfo[i].id)));
+        ui->tableWidget->setItem(i,2,new QTableWidgetItem(lStuInfo[i].name));
+        ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(lStuInfo[i].age)));
+        ui->tableWidget->setItem(i,4,new QTableWidgetItem(QString::number(lStuInfo[i].grade)));
+        ui->tableWidget->setItem(i,5,new QTableWidgetItem(QString::number(lStuInfo[i].stu_class)));
+        ui->tableWidget->setItem(i,6,new QTableWidgetItem(QString::number(lStuInfo[i].studentid)));
+        ui->tableWidget->setItem(i,7,new QTableWidgetItem(lStuInfo[i].phone));
+        ui->tableWidget->setItem(i,8,new QTableWidgetItem(lStuInfo[i].wechat));
+    }
+
+//    ui->tableWidget->viewport()->update();
+}
+
+
+void MainWindow::on_btn_exit_clicked()
+{
+    exit(0);
+}
+
+void MainWindow::on_btn_del_clicked()
+{
+    int i= ui->tableWidget->currentRow();
+    if(i>=0){
+        int id=ui->tableWidget->item(i,1)->text().toUInt();
+        m_ptrstuSql->delStu(id);
+        updateTable();
+        QMessageBox::information(nullptr,"信息","删除成功");
+    }
+
+}
+
+
+void MainWindow::on_btn_update_clicked()
+{
+//    m_ptrstuSql=stusql::getinstance();
+    int i=ui->tableWidget->currentRow();
+//    qDebug()<<i;
+//    studentInfo lStuInfo=m_ptrstuSql->getSingleData(i);
+    studentInfo lStuInfo;
+    if(i>=0){
+        lStuInfo.id=ui->tableWidget->item(i,1)->text().toUInt();
+        lStuInfo.name=ui->tableWidget->item(i,2)->text();
+        lStuInfo.age=ui->tableWidget->item(i,3)->text().toUInt();
+        lStuInfo.grade=ui->tableWidget->item(i,4)->text().toUInt();
+        lStuInfo.stu_class=ui->tableWidget->item(i,5)->text().toUInt();
+        lStuInfo.studentid=ui->tableWidget->item(i,6)->text().toUInt();
+        lStuInfo.phone=ui->tableWidget->item(i,7)->text();
+        lStuInfo.wechat=ui->tableWidget->item(i,8)->text();
+        m_dlgAddStu.setType(false,lStuInfo);
+        m_dlgAddStu.exec();
+    }
+    updateTable();
+}
+

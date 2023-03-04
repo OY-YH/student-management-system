@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "stusql.h"
 #include "page_login.h"
+#include "dlg_addstu.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,15 +22,28 @@ public:
     virtual void keyPressEvent(QKeyEvent *event);
 
 private slots:
-    void on_pushButton_clicked();
-
     //模拟数据
     void on_btn_simulation_clicked();
+    //增加学生
+    void on_btn_add_clicked();
+    //清空学生表
+    void on_btn_clearStu_clicked();
+    //界面退出
+    void on_btn_exit_clicked();
+    //删除学生信息
+    void on_btn_del_clicked();
+
+    void on_btn_update_clicked();
+
+private:
+    void updateTable();     //界面刷新
 
 private:
     Ui::MainWindow *ui;
     Page_login m_dlogin;
     stusql *m_ptrstuSql;
     QStringList m_lNames;
+    Dlg_AddStu m_dlgAddStu;
+
 };
 #endif // MAINWINDOW_H
