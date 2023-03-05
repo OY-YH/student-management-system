@@ -11,6 +11,7 @@ CONFIG += c++20
 
 SOURCES += \
     dlg_addstu.cpp \
+    dlg_adduser.cpp \
     main.cpp \
     mainwindow.cpp \
     page_login.cpp \
@@ -18,12 +19,14 @@ SOURCES += \
 
 HEADERS += \
     dlg_addstu.h \
+    dlg_adduser.h \
     mainwindow.h \
     page_login.h \
     stusql.h
 
 FORMS += \
     dlg_addstu.ui \
+    dlg_adduser.ui \
     mainwindow.ui \
     page_login.ui
 

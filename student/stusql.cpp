@@ -49,12 +49,12 @@ void stusql::init()
     //设置数据库
 //    m_db.setDatabaseName("/root/data.db");
     //设置为当前路径的数据库
-#if 0
+#if 1
     //返回该应用程序的输出目录
-    auto str_dir=QCoreApplication::applicationDirPath();
+    auto str_dir=QCoreApplication::applicationDirPath()+"/data.db";
 #endif
-    m_db.setDatabaseName("/root/data.db");
-
+//    m_db.setDatabaseName("/root/data.db");
+    m_db.setDatabaseName(str_dir);      //打包数据库
     if(!m_db.open()){
         qDebug()<<"m_db not open";
     }
@@ -133,6 +133,26 @@ bool stusql::addStu(studentInfo info)
     return q.exec(strSql);
 }
 
+bool stusql::addStu(QList<studentInfo> l)
+{
+    QSqlQuery q(m_db);
+    m_db.transaction(); //开启事务
+    for(auto info:l){
+        QString strSql=QString("insert into student values(null,'%1',%2,%3,%4,%5,'%6','%7')").
+                arg(info.name).
+                arg(info.age).
+                arg(info.grade).
+                arg(info.stu_class).
+                arg(info.studentid).
+                arg(info.phone).
+                arg(info.wechat);
+        q.exec(strSql); //执行sql语句
+    }
+    m_db.commit();
+
+    return true;
+}
+
 bool stusql::delStu(quint32 id)
 {
     QSqlQuery q(m_db);
@@ -179,6 +199,17 @@ bool stusql::clearStuTable()
         return false;
 }
 
+quint32 stusql::getUserSum()
+{
+    QSqlQuery q(m_db);
+    q.exec("select count(id) from username");
+    quint32 user_Sum=0;
+    while(q.next()){
+        user_Sum=q.value(0).toUInt();
+    }
+    return user_Sum;
+}
+
 QList<userInfo> stusql::getAllUser()
 {
     QList<userInfo> l;
@@ -214,6 +245,22 @@ bool stusql::addUser(userInfo info)
     return q.exec(strSql);
 }
 
+bool stusql::addUser(QList<userInfo> l)
+{
+    QSqlQuery q(m_db);
+    m_db.transaction(); //开启事务
+    for(auto info:l){
+        QString strSql=QString("insert into username values('%1','%2','%3')").
+                arg(info.username).
+                arg(info.password).
+                arg(info.aut);
+        q.exec(strSql); //执行sql语句
+    }
+    m_db.commit();
+
+    return true;
+}
+
 bool stusql::updateUser(userInfo info)
 {
     QSqlQuery q(m_db);
@@ -227,7 +274,16 @@ bool stusql::updateUser(userInfo info)
 //    const QSqlError e=q.lastError();
 //    if(e.isvalid()){
 //        qDebug()<<e.text();
-//    }
+    //    }
+}
+
+bool stusql::clearUserTable()
+{
+    QSqlQuery q(m_db);
+     //执行sql语句
+    QString strSql=QString("delete from username");
+    return q.exec(strSql);
+
 }
 
 bool stusql::delUser(QString username)

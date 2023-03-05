@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTreeWidgetItem>
 #include "stusql.h"
 #include "page_login.h"
 #include "dlg_addstu.h"
+#include "dlg_adduser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,7 +21,7 @@ public:
     ~MainWindow();
 
     //设置界面美观,按压f6，进行变化
-    virtual void keyPressEvent(QKeyEvent *event);
+//    virtual void keyPressEvent(QKeyEvent *event);
 
 private slots:
     //模拟数据
@@ -35,8 +37,27 @@ private slots:
 
     void on_btn_update_clicked();
 
+    void on_btn_search_clicked();
+
+    //treeWidget与stackWidget交互
+    void on_treeWidget_itemClicked(QTreeWidgetItem *item, int column);
+
+    void on_btn_user_add_clicked();
+
+    void on_btn_user_update_clicked();
+
+    void on_btn_user_del_clicked();
+
+    void on_btn_user_search_clicked();
+
+    void on_btn_user_simulation_clicked();
+
+    void on_btn_user_clear_clicked();
+
 private:
-    void updateTable();     //界面刷新
+    void updateTable();     //学生信息界面刷新
+    void updateUserTable();     //用户信息刷新
+    QString makePassword(int length);     //生成随机密码
 
 private:
     Ui::MainWindow *ui;
@@ -44,6 +65,7 @@ private:
     stusql *m_ptrstuSql;
     QStringList m_lNames;
     Dlg_AddStu m_dlgAddStu;
+    dlg_adduser m_dlgAddUser;
 
 };
 #endif // MAINWINDOW_H

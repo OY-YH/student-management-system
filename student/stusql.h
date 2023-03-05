@@ -50,7 +50,8 @@ public:
     QList<studentInfo> getPageData(quint32 page,quint32 page_count);
 
     //增加学生
-    bool addStu(studentInfo);
+    bool addStu(studentInfo);       //加载较慢
+    bool addStu(QList<studentInfo> l);
 
     //删除学生
     bool delStu(quint32 id);
@@ -61,6 +62,9 @@ public:
     //清空学生表
     bool clearStuTable();
 
+    //查询所有用户数量
+    quint32 getUserSum();
+
     //查询所有用户
     QList<userInfo> getAllUser();
 
@@ -68,10 +72,14 @@ public:
     bool user_isExit(QString username);
 
     //添加用户
-    bool addUser(userInfo info);
+    bool addUser(userInfo info);    //加载较慢
+    bool addUser(QList<userInfo> l);
 
     //修改用户信息
     bool updateUser(userInfo info);
+
+    //清空用户表
+    bool clearUserTable();
 
     //删除用户
     bool delUser(QString username);

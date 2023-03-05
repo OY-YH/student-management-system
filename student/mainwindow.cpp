@@ -5,6 +5,7 @@
 #include <QSqlDatabase>
 #include <QRandomGenerator>
 #include <QMessageBox>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,6 +13,19 @@ MainWindow::MainWindow(QWidget *parent)
     , m_ptrstuSql(nullptr)
 {
     ui->setupUi(this);
+
+
+    QFile file;
+    file.setFileName(":/dlg.css");
+    file.open(QIODevice::ReadOnly);    //只读,true
+    QString strQss=file.readAll();
+    m_dlogin.setStyleSheet(strQss);
+
+    file.close();
+    file.setFileName(":/main.css");
+    file.open(QIODevice::ReadOnly);    //只读,true
+    strQss=file.readAll();
+    this->setStyleSheet(strQss);
 
     m_dlogin.show();    //主界面显示
     //this->hide();       //不在主界面显示
@@ -31,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     l<<"学生管理";
     QTreeWidgetItem *q1=new QTreeWidgetItem(qf,l);
     qf->addChild(q1);
+//    ui->treeWidget->setItemWidget(q1,0,ui->tableWidget);
 
     l.clear();
     l<<"管理员管理";
@@ -316,7 +331,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_lNames<<"卑池";
 
     updateTable();
-    ui->tableWidget->viewport()->update();
+    updateUserTable();
+//    ui->tableWidget->viewport()->update();
 
 }
 
@@ -325,20 +341,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    if(event->key()==Qt::Key_F6)
-    {
-        QFile f;
-        auto str=QCoreApplication::applicationDirPath();
-//        qDebug()<<str;
-        f.setFileName(str+"/stuQss.css");
-        f.open(QIODevice::ReadOnly);    //只读,true
-        QString strQss=f.readAll();
-        this->setStyleSheet(strQss);
-        m_dlogin.setStyleSheet(strQss);
-    }
-}
+//void MainWindow::keyPressEvent(QKeyEvent *event)
+//{
+//    if(event->key()==Qt::Key_F6)
+//    {
+//        QFile f;
+//        auto str=QCoreApplication::applicationDirPath();
+////        qDebug()<<str;
+//        f.setFileName(str+"/stuQss.css");
+//        f.open(QIODevice::ReadOnly);    //只读,true
+//        QString strQss=f.readAll();
+//        this->setStyleSheet(strQss);
+//        m_dlogin.setStyleSheet(strQss);
+//    }
+//}
 
 
 void MainWindow::on_btn_simulation_clicked()
@@ -346,6 +362,8 @@ void MainWindow::on_btn_simulation_clicked()
     QRandomGenerator a,g,c;
     g.seed(0);
     g.seed(0);
+
+    QList<studentInfo> l;
     //制作一千条学生数据，模拟数据
     for(int i=0;i<m_lNames.size();i++){
         studentInfo info;
@@ -370,9 +388,10 @@ void MainWindow::on_btn_simulation_clicked()
         info.studentid=info.grade*10+info.stu_class;
         info.phone="12344433334";
         info.wechat="12344433334";
-        m_ptrstuSql->addStu(info);
+        l.append(info);
     }
-
+    m_ptrstuSql->addStu(l);
+    updateTable();
 
 }
 
@@ -430,7 +449,65 @@ void MainWindow::updateTable()
         ui->tableWidget->setItem(i,8,new QTableWidgetItem(lStuInfo[i].wechat));
     }
 
-//    ui->tableWidget->viewport()->update();
+    //    ui->tableWidget->viewport()->update();
+}
+
+void MainWindow::updateUserTable()
+{
+    //初始化
+//    方法1
+    ui->tableWidget_2->clear();   //初始化后没表头,可把ui设置的表头删除
+    ui->tableWidget_2->setColumnCount(4);
+    //编写表头
+    QStringList l;
+    l<<"序号"<<"用户名"<<"密码"<<"权限";
+    ui->tableWidget_2->setHorizontalHeaderLabels(l);
+    //方法2
+//    ui->tableWidget->clearContents();      //只删内容
+
+    //数据显示
+//    auto stuSum=m_ptrstuSql->getSum();
+    QList<userInfo> lUserInfo=m_ptrstuSql->getAllUser();
+
+    ui->tableWidget_2->setRowCount(lUserInfo.size());
+    ui->lb_userSum->setText(QString("用户总数：%1").arg(lUserInfo.size()));
+
+    //只选中行,单行选中   如要多行选中，把第二个注释掉就ok
+    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget_2->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    //不可编辑
+    ui->tableWidget_2->setEditTriggers(QHeaderView::NoEditTriggers);
+
+    for(int i=0;i<lUserInfo.size();i++){
+        ui->tableWidget_2->setItem(i,0,new QTableWidgetItem(QString::number(i)));
+        ui->tableWidget_2->setItem(i,1,new QTableWidgetItem(lUserInfo[i].username));
+        ui->tableWidget_2->setItem(i,2,new QTableWidgetItem(lUserInfo[i].password));
+        ui->tableWidget_2->setItem(i,3,new QTableWidgetItem(lUserInfo[i].aut));
+    }
+}
+
+QString MainWindow::makePassword(int length)
+{
+//    QString p;
+//    qsrand(QDateTime::currentMSecsSinceEpoch());
+    srand(QDateTime::currentMSecsSinceEpoch());     //为随机值设定一个seed 随机数的起始值（种子
+    const char chs[]="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    int chs_size=sizeof(chs);
+
+    char *ch=new char[length+1];
+    memset(ch,0,length+1);
+    int random=0;
+    for(int i=0;i<length;i++){
+//        random=qrand()%(chs_size-1);  //老版本
+        random=rand()%(chs_size-1);     //新版本（没有qrand
+//        random=QRandomGenerator::global()->generate()%(chs_size-1);
+        ch[i]=chs[random];
+    }
+
+    QString ret(ch);
+    delete[] ch;
+    return ret;
 }
 
 
@@ -472,5 +549,198 @@ void MainWindow::on_btn_update_clicked()
         m_dlgAddStu.exec();
     }
     updateTable();
+}
+
+
+void MainWindow::on_btn_search_clicked()
+{
+
+    QString strFilter=ui->le_search->text();
+    if(strFilter.isEmpty()){
+        QMessageBox::information(nullptr,"警告","名字筛选为空");
+        //复位
+        updateTable();
+        return ;
+    }
+    //初始化
+//    方法1
+    ui->tableWidget->clear();   //初始化后没表头,可把ui设置的表头删除
+    ui->tableWidget->setColumnCount(9);
+    //编写表头
+    QStringList l;
+    l<<"序号"<<"id"<<"姓名"<<"年龄"<<"年级"<<"班级"<<"学号"<<"电话"<<"微信";
+    ui->tableWidget->setHorizontalHeaderLabels(l);
+    //方法2
+//    ui->tableWidget->clearContents();      //只删内容
+
+    //数据显示
+    auto stuSum=m_ptrstuSql->getSum();
+    QList<studentInfo> lStuInfo=m_ptrstuSql->getPageData(1,stuSum);
+
+    ;
+    ui->lb_sum->setText(QString("学生总数：%1").arg(stuSum));
+
+    //只选中行,单行选中   如要多行选中，把第二个注释掉就ok
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    //不可编辑
+    ui->tableWidget->setEditTriggers(QHeaderView::NoEditTriggers);
+
+
+    int index=0;
+    for(int i=0;i<lStuInfo.size();i++){
+        if(!lStuInfo[i].name.contains(strFilter)){
+            continue;
+        }
+
+        ui->tableWidget->setItem(index,0,new QTableWidgetItem(QString::number(index+1)));
+        ui->tableWidget->setItem(index,1,new QTableWidgetItem(QString::number(lStuInfo[i].id)));
+        ui->tableWidget->setItem(index,2,new QTableWidgetItem(lStuInfo[i].name));
+        ui->tableWidget->setItem(index,3,new QTableWidgetItem(QString::number(lStuInfo[i].age)));
+        ui->tableWidget->setItem(index,4,new QTableWidgetItem(QString::number(lStuInfo[i].grade)));
+        ui->tableWidget->setItem(index,5,new QTableWidgetItem(QString::number(lStuInfo[i].stu_class)));
+        ui->tableWidget->setItem(index,6,new QTableWidgetItem(QString::number(lStuInfo[i].studentid)));
+        ui->tableWidget->setItem(index,7,new QTableWidgetItem(lStuInfo[i].phone));
+        ui->tableWidget->setItem(index,8,new QTableWidgetItem(lStuInfo[i].wechat));
+        index++;
+    }
+    ui->tableWidget->setRowCount(index);
+}
+
+
+void MainWindow::on_treeWidget_itemClicked(QTreeWidgetItem *item, int column)
+{
+    if(item->text(column)=="学生管理"){
+        qDebug()<<item->text(column);
+        ui->stackedWidget->setCurrentWidget(ui->page_stu);
+    }
+    else if(item->text(column)=="管理员管理"){
+        ui->stackedWidget->setCurrentWidget(ui->page_user);
+    }
+}
+
+
+void MainWindow::on_btn_user_add_clicked()
+{
+    m_dlgAddUser.setType(true);
+    m_dlgAddUser.exec();    //模态对话框
+    updateUserTable();
+}
+
+
+void MainWindow::on_btn_user_update_clicked()
+{
+    int i=ui->tableWidget_2->currentRow();
+//    qDebug()<<i;
+//    studentInfo lStuInfo=m_ptrstuSql->getSingleData(i);
+    userInfo lUserInfo;
+    if(i>=0){
+//        lUserInfo.id=ui->tableWidget->item(i,1)->text().toUInt();
+        lUserInfo.username=ui->tableWidget_2->item(i,1)->text();
+        lUserInfo.password=ui->tableWidget_2->item(i,2)->text();
+        lUserInfo.aut=ui->tableWidget_2->item(i,3)->text();
+        m_dlgAddUser.setType(false,lUserInfo);
+        m_dlgAddUser.exec();
+    }
+    updateUserTable();
+}
+
+
+void MainWindow::on_btn_user_del_clicked()
+{
+    int i= ui->tableWidget_2->currentRow();
+    if(i>=0){
+        QString username=ui->tableWidget_2->item(i,1)->text();
+        m_ptrstuSql->delUser(username);
+        updateUserTable();
+        QMessageBox::information(nullptr,"信息","删除成功");
+    }
+
+}
+
+
+void MainWindow::on_btn_user_search_clicked()
+{
+    QString strFilter=ui->le_user_search->text();
+    if(strFilter.isEmpty()){
+        QMessageBox::information(nullptr,"警告","名字筛选为空");
+        //复位
+        updateUserTable();
+        return ;
+    }
+    //初始化
+//    方法1
+    ui->tableWidget_2->clear();   //初始化后没表头,可把ui设置的表头删除
+    ui->tableWidget_2->setColumnCount(4);
+    //编写表头
+    QStringList l;
+    l<<"序号"<<"用户名"<<"密码"<<"权限";
+    ui->tableWidget_2->setHorizontalHeaderLabels(l);
+    //方法2
+//    ui->tableWidget->clearContents();      //只删内容
+
+    //数据显示
+//    auto stuSum=m_ptrstuSql->getSum();
+    QList<userInfo> lUserInfo=m_ptrstuSql->getAllUser();
+
+    ui->tableWidget_2->setRowCount(lUserInfo.size());
+    ui->lb_userSum->setText(QString("用户总数：%1").arg(lUserInfo.size()));
+
+    //只选中行,单行选中   如要多行选中，把第二个注释掉就ok
+    ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget_2->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    //不可编辑
+    ui->tableWidget_2->setEditTriggers(QHeaderView::NoEditTriggers);
+    int index=0;
+    for(int i=0;i<lUserInfo.size();i++){
+        if(!lUserInfo[i].username.contains(strFilter)){
+            continue;
+        }
+        ui->tableWidget_2->setItem(index,0,new QTableWidgetItem(QString::number(index+1)));
+        ui->tableWidget_2->setItem(index,1,new QTableWidgetItem(lUserInfo[i].username));
+        ui->tableWidget_2->setItem(index,2,new QTableWidgetItem(lUserInfo[i].password));
+        ui->tableWidget_2->setItem(index,3,new QTableWidgetItem(lUserInfo[i].aut));
+        index++;
+    }
+
+    ui->tableWidget->setRowCount(index);
+}
+
+
+void MainWindow::on_btn_user_simulation_clicked()
+{
+    QRandomGenerator a,g,c;
+    g.seed(0);
+    g.seed(0);
+
+    QList<userInfo> l;
+    //制作一千条学生数据，模拟数据
+    for(int i=0;i<m_lNames.size();i++){
+        userInfo info;
+        info.username=m_lNames[i];
+        info.password=makePassword(7);
+        if(i%3){
+            info.aut="管理员";
+        }
+        if(i%7){
+            info.aut="学生";
+        }
+        if(i%2){
+           info.aut="其他";
+        }
+
+        l.append(info);
+    }
+    m_ptrstuSql->addUser(l);    //加载更快
+    updateTable();
+}
+
+
+void MainWindow::on_btn_user_clear_clicked()
+{
+    m_ptrstuSql->clearUserTable();
+    updateUserTable();
 }
 
