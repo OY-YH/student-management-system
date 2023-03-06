@@ -16,15 +16,15 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     QFile file;
-    file.setFileName(":/dlg.css");
-    file.open(QIODevice::ReadOnly);    //只读,true
-    QString strQss=file.readAll();
-    m_dlogin.setStyleSheet(strQss);
+//    file.setFileName(":/dlg.css");
+//    file.open(QIODevice::ReadOnly);    //只读,true
+//    QString strQss=file.readAll();
+//    m_dlogin.setStyleSheet(strQss);
 
-    file.close();
+//    file.close();
     file.setFileName(":/main.css");
     file.open(QIODevice::ReadOnly);    //只读,true
-    strQss=file.readAll();
+    QString strQss=file.readAll();
     this->setStyleSheet(strQss);
 
     m_dlogin.show();    //主界面显示
@@ -32,7 +32,10 @@ MainWindow::MainWindow(QWidget *parent)
     auto f=[&](){
         this->show();
     };
+
     connect(&m_dlogin,&Page_login::sendLoginSuccess,this,f);
+    //刷新注册数据
+    connect(&m_dlogin,&Page_login::sendRegisterSUccess,this,&MainWindow::updateUserTable);
 
     ui->treeWidget->setColumnCount(1);
 
@@ -330,6 +333,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_lNames<<"斛阑";
     m_lNames<<"卑池";
 
+
     updateTable();
     updateUserTable();
 //    ui->tableWidget->viewport()->update();
@@ -582,11 +586,12 @@ void MainWindow::on_btn_search_clicked()
 
     //只选中行,单行选中   如要多行选中，把第二个注释掉就ok
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+//    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 
     //不可编辑
     ui->tableWidget->setEditTriggers(QHeaderView::NoEditTriggers);
-
+    //自动调节列宽
+    ui->tableWidget->resizeColumnToContents(9);
 
     int index=0;
     for(int i=0;i<lStuInfo.size();i++){
@@ -684,15 +689,18 @@ void MainWindow::on_btn_user_search_clicked()
 //    auto stuSum=m_ptrstuSql->getSum();
     QList<userInfo> lUserInfo=m_ptrstuSql->getAllUser();
 
-    ui->tableWidget_2->setRowCount(lUserInfo.size());
+//    ui->tableWidget_2->setRowCount(lUserInfo.size());
     ui->lb_userSum->setText(QString("用户总数：%1").arg(lUserInfo.size()));
 
     //只选中行,单行选中   如要多行选中，把第二个注释掉就ok
     ui->tableWidget_2->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->tableWidget_2->setSelectionMode(QAbstractItemView::SingleSelection);
+//    ui->tableWidget_2->setSelectionMode(QAbstractItemView::SingleSelection);
 
     //不可编辑
     ui->tableWidget_2->setEditTriggers(QHeaderView::NoEditTriggers);
+    //自动调节列宽
+    ui->tableWidget_2->resizeColumnToContents(4);
+
     int index=0;
     for(int i=0;i<lUserInfo.size();i++){
         if(!lUserInfo[i].username.contains(strFilter)){
@@ -705,7 +713,7 @@ void MainWindow::on_btn_user_search_clicked()
         index++;
     }
 
-    ui->tableWidget->setRowCount(index);
+    ui->tableWidget_2->setRowCount(index);
 }
 
 
@@ -743,4 +751,34 @@ void MainWindow::on_btn_user_clear_clicked()
     m_ptrstuSql->clearUserTable();
     updateUserTable();
 }
+
+
+//void MainWindow::on_chb_all_clicked()
+//{
+////    int top=0,left=0,bottom=ui->tableWidget->rowCount()-1,right=9;
+////    QTableWidgetSelectionRange range=QTableWidgetSelectionRange(top,left,bottom,right);
+////    if(ui->chb_all->isChecked()){
+////        ui->tableWidget->setRangeSelected(range,true);
+////    }
+////    else{
+////        ui->tableWidget->setRangeSelected(range,false);
+////    }
+//    ui->tableWidget->selectAll();
+//    updateTable();
+//}
+
+
+//void MainWindow::on_chb_all_stateChanged(int arg1)
+//{
+//    int top=0,left=0,bottom=ui->tableWidget->rowCount()-1,right=9;
+//    QTableWidgetSelectionRange range=QTableWidgetSelectionRange(top,left,bottom,right);
+//    if(ui->chb_all->isChecked()){
+//        ui->tableWidget->setRangeSelected(range,true);
+//    }
+//    else{
+//        ui->tableWidget->setRangeSelected(range,false);
+//    }
+//    ui->tableWidget->selectAll();
+//    updateTable();
+//}
 

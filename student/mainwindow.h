@@ -17,6 +17,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+//    //创建单例对象
+//    static MainWindow *ptrMain;       //类内静态指针，类外初始化
+//    static MainWindow *getinstance(){   //返回单例
+//        if(nullptr==ptrMain){     //把常量放左边，方便检测，编码规范要求
+//            ptrMain=new MainWindow;
+//        }
+//        return ptrMain;
+//    }
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -53,6 +61,10 @@ private slots:
     void on_btn_user_simulation_clicked();
 
     void on_btn_user_clear_clicked();
+
+//    void on_chb_all_clicked();
+
+//    void on_chb_all_stateChanged(int arg1);
 
 private:
     void updateTable();     //学生信息界面刷新

@@ -1,13 +1,25 @@
-QPushButton{border-radius:6px;color:white;background-color:#1abc9c;}
+/*QPushButton{border-radius:6px;color:white;background-color:#1abc9c;}*/
+QPushButton{
+    background-color:qlineargradient(spread:pad,x1:0.52,y1:1,x2:0.54,y2:0,stop:0.0112994 rgba(64,145,252,255),stop:1 rgba(255,255,255,255));
+    color:rgb(255,255,255,255);
+    border:0px groove gray;
+    border-radius:7px;
+    padding:2px 4px;
+    font:14pt "Candara";
+}
 QLabel{color:#1abc9c;}
+QLabel#lb_title{
+    font: 87 26pt "Arial Black";
+}
 QLabel#lb1{color:#1abc9c;font-size:24;}
 QLabel#lb2{color:#1abc9c;font-size:24;}
-QLineEdit{border: 2px solid #2ecc71;border-radius:6px;min-height:25;}
-
-QTableView::item{
-    font:14px "微软雅黑";
-    color:#677483;
-    gridline-color:#ccddf0;
+/*QLineEdit{border: 2px solid #2ecc71;border-radius:6px;min-height:25;}*/
+QLineEdit{
+    background-color:rgb(247,247,247);
+    border:1px groove gray;
+    border-radius:7px;
+    padding:2px 4px;
+    font:14pt "Candara";
 }
 
-QLabel#lb_sum{color:red;}
+

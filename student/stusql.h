@@ -70,6 +70,7 @@ public:
 
     //查询用户名是否存在
     bool user_isExit(QString username);
+    bool user_isExit(QString username,QString password);
 
     //添加用户
     bool addUser(userInfo info);    //加载较慢

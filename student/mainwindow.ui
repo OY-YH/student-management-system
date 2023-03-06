@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>848</width>
-    <height>635</height>
+    <width>1024</width>
+    <height>680</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>680</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -56,7 +62,7 @@ border:1px;
     <item row="1" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_stu">
        <layout class="QGridLayout" name="gridLayout_4">
@@ -193,7 +199,7 @@ border:1px;
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QCheckBox" name="checkBox">
+         <widget class="QCheckBox" name="chb_all">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -481,7 +487,7 @@ border:1px;
         <widget class="QLabel" name="label">
          <property name="minimumSize">
           <size>
-           <width>500</width>
+           <width>250</width>
            <height>0</height>
           </size>
          </property>
@@ -508,13 +514,35 @@ border:1px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>848</width>
+     <width>1024</width>
      <height>33</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>treeWidget</tabstop>
+  <tabstop>btn_add</tabstop>
+  <tabstop>btn_update</tabstop>
+  <tabstop>btn_del</tabstop>
+  <tabstop>le_search</tabstop>
+  <tabstop>btn_search</tabstop>
+  <tabstop>tableWidget</tabstop>
+  <tabstop>chb_all</tabstop>
+  <tabstop>btn_exit</tabstop>
+  <tabstop>btn_clearStu</tabstop>
+  <tabstop>btn_simulation</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>tableWidget_2</tabstop>
+  <tabstop>btn_user_del</tabstop>
+  <tabstop>le_user_search</tabstop>
+  <tabstop>btn_user_add</tabstop>
+  <tabstop>btn_user_search</tabstop>
+  <tabstop>btn_user_simulation</tabstop>
+  <tabstop>btn_user_clear</tabstop>
+  <tabstop>btn_user_update</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -234,6 +234,14 @@ bool stusql::user_isExit(QString username)
     return q.next();
 }
 
+bool stusql::user_isExit(QString username,QString password)
+{
+    QSqlQuery q(m_db);
+    QString strSql=QString("select *from username where username='%1' and password='%2'").arg(username).arg(password);
+    q.exec(strSql);
+    return q.next();
+}
+
 bool stusql::addUser(userInfo info)
 {
     QSqlQuery q(m_db);

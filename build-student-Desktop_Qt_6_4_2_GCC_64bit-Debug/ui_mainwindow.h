@@ -41,7 +41,7 @@ public:
     QPushButton *btn_add;
     QTableWidget *tableWidget;
     QPushButton *btn_del;
-    QCheckBox *checkBox;
+    QCheckBox *chb_all;
     QPushButton *btn_clearStu;
     QPushButton *btn_simulation;
     QLabel *lb_sum;
@@ -78,7 +78,8 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(848, 635);
+        MainWindow->resize(1024, 680);
+        MainWindow->setMinimumSize(QSize(1024, 680));
         QFont font;
         font.setPointSize(15);
         MainWindow->setFont(font);
@@ -163,14 +164,14 @@ public:
 
         gridLayout_4->addWidget(btn_del, 0, 4, 1, 1);
 
-        checkBox = new QCheckBox(page_stu);
-        checkBox->setObjectName("checkBox");
-        checkBox->setMinimumSize(QSize(0, 30));
+        chb_all = new QCheckBox(page_stu);
+        chb_all->setObjectName("chb_all");
+        chb_all->setMinimumSize(QSize(0, 30));
         QFont font1;
         font1.setPointSize(14);
-        checkBox->setFont(font1);
+        chb_all->setFont(font1);
 
-        gridLayout_4->addWidget(checkBox, 0, 0, 1, 1);
+        gridLayout_4->addWidget(chb_all, 0, 0, 1, 1);
 
         btn_clearStu = new QPushButton(page_stu);
         btn_clearStu->setObjectName("btn_clearStu");
@@ -327,7 +328,7 @@ public:
 
         label = new QLabel(widget);
         label->setObjectName("label");
-        label->setMinimumSize(QSize(500, 0));
+        label->setMinimumSize(QSize(250, 0));
         QFont font2;
         font2.setPointSize(17);
         label->setFont(font2);
@@ -341,15 +342,34 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 848, 33));
+        menubar->setGeometry(QRect(0, 0, 1024, 33));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
         MainWindow->setStatusBar(statusbar);
+        QWidget::setTabOrder(treeWidget, btn_add);
+        QWidget::setTabOrder(btn_add, btn_update);
+        QWidget::setTabOrder(btn_update, btn_del);
+        QWidget::setTabOrder(btn_del, le_search);
+        QWidget::setTabOrder(le_search, btn_search);
+        QWidget::setTabOrder(btn_search, tableWidget);
+        QWidget::setTabOrder(tableWidget, chb_all);
+        QWidget::setTabOrder(chb_all, btn_exit);
+        QWidget::setTabOrder(btn_exit, btn_clearStu);
+        QWidget::setTabOrder(btn_clearStu, btn_simulation);
+        QWidget::setTabOrder(btn_simulation, checkBox_2);
+        QWidget::setTabOrder(checkBox_2, tableWidget_2);
+        QWidget::setTabOrder(tableWidget_2, btn_user_del);
+        QWidget::setTabOrder(btn_user_del, le_user_search);
+        QWidget::setTabOrder(le_user_search, btn_user_add);
+        QWidget::setTabOrder(btn_user_add, btn_user_search);
+        QWidget::setTabOrder(btn_user_search, btn_user_simulation);
+        QWidget::setTabOrder(btn_user_simulation, btn_user_clear);
+        QWidget::setTabOrder(btn_user_clear, btn_user_update);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -384,7 +404,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem9 = tableWidget->verticalHeaderItem(0);
         ___qtablewidgetitem9->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
         btn_del->setText(QCoreApplication::translate("MainWindow", "\345\210\240\351\231\244", nullptr));
-        checkBox->setText(QCoreApplication::translate("MainWindow", "\345\205\250\351\200\211", nullptr));
+        chb_all->setText(QCoreApplication::translate("MainWindow", "\345\205\250\351\200\211", nullptr));
         btn_clearStu->setText(QCoreApplication::translate("MainWindow", "\346\270\205\347\251\272\345\255\246\347\224\237\350\241\250", nullptr));
         btn_simulation->setText(QCoreApplication::translate("MainWindow", "\346\250\241\346\213\237\346\225\260\346\215\256", nullptr));
         lb_sum->setText(QString());

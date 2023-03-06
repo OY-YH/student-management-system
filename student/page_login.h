@@ -2,6 +2,7 @@
 #define PAGE_LOGIN_H
 
 #include <QWidget>
+#include "stusql.h"
 
 namespace Ui {
 class Page_login;
@@ -18,13 +19,15 @@ public:
 private slots:
     void on_bin_login_clicked();
 
-    void on_bin_exit_clicked();
+    void on_btn_register_clicked();
 
 signals:
     void sendLoginSuccess();
+    void sendRegisterSUccess();
 
 private:
     Ui::Page_login *ui;
+    stusql *m_ptrstuSql;
 };
 
 #endif // PAGE_LOGIN_H
