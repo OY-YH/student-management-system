@@ -3,6 +3,7 @@
 #include "dlg_regiseter.h"
 #include "mainwindow.h"
 #include <QMessageBox>
+#include <QGraphicsDropShadowEffect>
 #include <QFile>
 
 Page_login::Page_login(QWidget *parent) :
@@ -16,6 +17,19 @@ Page_login::Page_login(QWidget *parent) :
     file.open(QIODevice::ReadOnly);    //只读,true
     QString strQss=file.readAll();
     setStyleSheet(strQss);
+
+    //设置图片
+    QPixmap *pix=new QPixmap(":/login.jpg");
+    QSize sz=ui->lb_image->size();
+    ui->lb_image->setPixmap(pix->scaled(sz));
+
+    //设置图片阴影效果
+    QGraphicsDropShadowEffect *shadow=new QGraphicsDropShadowEffect(this);
+    shadow->setOffset(-3,0);
+    shadow->setColor(QColor("#888888"));
+    shadow->setBlurRadius(30);
+    ui->lb_image->setGraphicsEffect(shadow);
+
 }
 
 Page_login::~Page_login()

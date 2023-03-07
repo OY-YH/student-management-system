@@ -16,6 +16,11 @@ Dlg_regiseter::Dlg_regiseter(QWidget *parent) :
     QString strQss=file.readAll();
     setStyleSheet(strQss);
 
+    //设置图片
+    QPixmap *pix=new QPixmap(":/register.jpg");
+    QSize sz=ui->lb_reg_image->size();
+    ui->lb_reg_image->setPixmap(pix->scaled(sz));
+
 }
 
 Dlg_regiseter::~Dlg_regiseter()

@@ -992,7 +992,9 @@ qrc_res.cpp: ../student/res.qrc \
 		/opt/Qt6.4.2/6.4.2/gcc_64/libexec/rcc \
 		../student/main.css \
 		../student/dlg.css \
+		../student/login.jpg \
 		../student/icon \
+		../student/register.jpg \
 		../student/register.css
 	/opt/Qt6.4.2/6.4.2/gcc_64/libexec/rcc -name res --no-zstd ../student/res.qrc -o qrc_res.cpp
 
@@ -3138,6 +3140,8 @@ page_login.o: ../student/page_login.cpp ../student/page_login.h \
 		../student/dlg_adduser.h \
 		/opt/Qt6.4.2/6.4.2/gcc_64/include/QtWidgets/QMessageBox \
 		/opt/Qt6.4.2/6.4.2/gcc_64/include/QtWidgets/qmessagebox.h \
+		/opt/Qt6.4.2/6.4.2/gcc_64/include/QtWidgets/QGraphicsDropShadowEffect \
+		/opt/Qt6.4.2/6.4.2/gcc_64/include/QtWidgets/qgraphicseffect.h \
 		/opt/Qt6.4.2/6.4.2/gcc_64/include/QtCore/QFile \
 		/opt/Qt6.4.2/6.4.2/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt6.4.2/6.4.2/gcc_64/include/QtCore/qfiledevice.h

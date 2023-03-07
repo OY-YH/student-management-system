@@ -4,5 +4,7 @@
         <file>main.css</file>
         <file>dlg.css</file>
         <file>register.css</file>
+        <file>login.jpg</file>
+        <file>register.jpg</file>
     </qresource>
 </RCC>
