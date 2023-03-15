@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&m_dlogin,&Page_login::sendLoginSuccess,this,f);
     //刷新注册数据
     connect(&m_dlogin,&Page_login::sendRegisterSUccess,this,&MainWindow::updateUserTable);
+    //刷新修改后的密码数据
+    connect(&m_dlogin,&Page_login::sendRemeberSuccess,this,&MainWindow::updateUserTable);
 
     ui->treeWidget->setColumnCount(1);
 
@@ -338,7 +340,10 @@ MainWindow::MainWindow(QWidget *parent)
     updateUserTable();
 //    ui->tableWidget->viewport()->update();
 
+//    setAttribute(Qt::WA_DeleteOnClose);
+
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -517,7 +522,8 @@ QString MainWindow::makePassword(int length)
 
 void MainWindow::on_btn_exit_clicked()
 {
-    exit(0);
+//    exit(0);
+    this->close();
 }
 
 void MainWindow::on_btn_del_clicked()

@@ -12,6 +12,7 @@ CONFIG += c++20
 SOURCES += \
     dlg_addstu.cpp \
     dlg_adduser.cpp \
+    dlg_forget.cpp \
     dlg_regiseter.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     dlg_addstu.h \
     dlg_adduser.h \
+    dlg_forget.h \
     dlg_regiseter.h \
     mainwindow.h \
     page_login.h \
@@ -29,6 +31,7 @@ HEADERS += \
 FORMS += \
     dlg_addstu.ui \
     dlg_adduser.ui \
+    dlg_forget.ui \
     dlg_regiseter.ui \
     mainwindow.ui \
     page_login.ui

@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -25,14 +26,7 @@ class Ui_Page_login
 {
 public:
     QGridLayout *gridLayout;
-    QWidget *widget;
-    QGridLayout *gridLayout_2;
-    QSpacerItem *horizontalSpacer_4;
-    QSpacerItem *horizontalSpacer_2;
-    QPushButton *bin_login;
-    QPushButton *btn_register;
-    QSpacerItem *horizontalSpacer_3;
-    QSpacerItem *verticalSpacer;
+    QLabel *lb_title;
     QWidget *widget_2;
     QGridLayout *gridLayout_3;
     QSpacerItem *horizontalSpacer;
@@ -41,9 +35,19 @@ public:
     QLabel *lb1;
     QLineEdit *le_password;
     QSpacerItem *verticalSpacer_2;
-    QLabel *lb_title;
-    QSpacerItem *verticalSpacer_3;
     QLabel *lb_image;
+    QSpacerItem *verticalSpacer_3;
+    QWidget *widget;
+    QGridLayout *gridLayout_2;
+    QPushButton *btn_register;
+    QSpacerItem *horizontalSpacer_3;
+    QSpacerItem *verticalSpacer;
+    QSpacerItem *horizontalSpacer_2;
+    QPushButton *btn_forget;
+    QSpacerItem *verticalSpacer_4;
+    QPushButton *bin_login;
+    QCheckBox *cb_remember;
+    QSpacerItem *verticalSpacer_5;
 
     void setupUi(QWidget *Page_login)
     {
@@ -59,44 +63,17 @@ public:
         Page_login->setStyleSheet(QString::fromUtf8(""));
         gridLayout = new QGridLayout(Page_login);
         gridLayout->setObjectName("gridLayout");
-        widget = new QWidget(Page_login);
-        widget->setObjectName("widget");
-        widget->setMinimumSize(QSize(0, 45));
-        widget->setMaximumSize(QSize(16777215, 140));
-        gridLayout_2 = new QGridLayout(widget);
-        gridLayout_2->setObjectName("gridLayout_2");
-        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        lb_title = new QLabel(Page_login);
+        lb_title->setObjectName("lb_title");
+        lb_title->setMinimumSize(QSize(0, 50));
+        lb_title->setMaximumSize(QSize(16777215, 140));
+        QFont font;
+        font.setPointSize(20);
+        lb_title->setFont(font);
+        lb_title->setStyleSheet(QString::fromUtf8(""));
+        lb_title->setAlignment(Qt::AlignCenter);
 
-        gridLayout_2->addItem(horizontalSpacer_4, 0, 0, 1, 1);
-
-        horizontalSpacer_2 = new QSpacerItem(35, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_2->addItem(horizontalSpacer_2, 0, 2, 1, 1);
-
-        bin_login = new QPushButton(widget);
-        bin_login->setObjectName("bin_login");
-        bin_login->setMinimumSize(QSize(150, 50));
-        bin_login->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout_2->addWidget(bin_login, 0, 1, 1, 1);
-
-        btn_register = new QPushButton(widget);
-        btn_register->setObjectName("btn_register");
-        btn_register->setMinimumSize(QSize(150, 50));
-        btn_register->setStyleSheet(QString::fromUtf8(""));
-
-        gridLayout_2->addWidget(btn_register, 0, 3, 1, 1);
-
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_2->addItem(horizontalSpacer_3, 0, 4, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 35, QSizePolicy::Minimum, QSizePolicy::Maximum);
-
-        gridLayout_2->addItem(verticalSpacer, 1, 2, 1, 1);
-
-
-        gridLayout->addWidget(widget, 3, 0, 1, 1);
+        gridLayout->addWidget(lb_title, 2, 0, 1, 1);
 
         widget_2 = new QWidget(Page_login);
         widget_2->setObjectName("widget_2");
@@ -104,6 +81,7 @@ public:
         widget_2->setMaximumSize(QSize(16777215, 150));
         gridLayout_3 = new QGridLayout(widget_2);
         gridLayout_3->setObjectName("gridLayout_3");
+        gridLayout_3->setContentsMargins(-1, -1, -1, 0);
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
         gridLayout_3->addItem(horizontalSpacer, 0, 2, 1, 1);
@@ -117,17 +95,17 @@ public:
 
         lb2 = new QLabel(widget_2);
         lb2->setObjectName("lb2");
-        QFont font;
-        font.setFamilies({QString::fromUtf8("Noto Rashi Hebrew Light")});
-        font.setPointSize(14);
-        lb2->setFont(font);
+        QFont font1;
+        font1.setFamilies({QString::fromUtf8("Noto Rashi Hebrew Light")});
+        font1.setPointSize(14);
+        lb2->setFont(font1);
         lb2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout_3->addWidget(lb2, 3, 0, 1, 1);
 
         lb1 = new QLabel(widget_2);
         lb1->setObjectName("lb1");
-        lb1->setFont(font);
+        lb1->setFont(font1);
         lb1->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         gridLayout_3->addWidget(lb1, 0, 0, 1, 1);
@@ -140,28 +118,12 @@ public:
 
         gridLayout_3->addWidget(le_password, 3, 1, 1, 1);
 
-        verticalSpacer_2 = new QSpacerItem(20, 30, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_2 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
         gridLayout_3->addItem(verticalSpacer_2, 1, 1, 1, 1);
 
 
-        gridLayout->addWidget(widget_2, 2, 0, 1, 1);
-
-        lb_title = new QLabel(Page_login);
-        lb_title->setObjectName("lb_title");
-        lb_title->setMinimumSize(QSize(0, 50));
-        lb_title->setMaximumSize(QSize(16777215, 140));
-        QFont font1;
-        font1.setPointSize(20);
-        lb_title->setFont(font1);
-        lb_title->setStyleSheet(QString::fromUtf8(""));
-        lb_title->setAlignment(Qt::AlignCenter);
-
-        gridLayout->addWidget(lb_title, 1, 0, 1, 1);
-
-        verticalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Maximum);
-
-        gridLayout->addItem(verticalSpacer_3, 0, 0, 1, 1);
+        gridLayout->addWidget(widget_2, 4, 0, 1, 1);
 
         lb_image = new QLabel(Page_login);
         lb_image->setObjectName("lb_image");
@@ -169,11 +131,74 @@ public:
         lb_image->setMaximumSize(QSize(400, 16777215));
         lb_image->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
 
-        gridLayout->addWidget(lb_image, 0, 1, 4, 1);
+        gridLayout->addWidget(lb_image, 0, 1, 9, 1);
+
+        verticalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Maximum);
+
+        gridLayout->addItem(verticalSpacer_3, 0, 0, 1, 1);
+
+        widget = new QWidget(Page_login);
+        widget->setObjectName("widget");
+        widget->setMinimumSize(QSize(0, 45));
+        widget->setMaximumSize(QSize(16777215, 200));
+        gridLayout_2 = new QGridLayout(widget);
+        gridLayout_2->setObjectName("gridLayout_2");
+        gridLayout_2->setContentsMargins(-1, 0, -1, -1);
+        btn_register = new QPushButton(widget);
+        btn_register->setObjectName("btn_register");
+        btn_register->setMinimumSize(QSize(150, 50));
+        btn_register->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout_2->addWidget(btn_register, 3, 3, 1, 1);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_3, 3, 4, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 35, QSizePolicy::Minimum, QSizePolicy::Maximum);
+
+        gridLayout_2->addItem(verticalSpacer, 4, 2, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(35, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_2, 3, 2, 1, 1);
+
+        btn_forget = new QPushButton(widget);
+        btn_forget->setObjectName("btn_forget");
+        btn_forget->setMinimumSize(QSize(0, 40));
+        btn_forget->setMaximumSize(QSize(200, 16777215));
+        QFont font2;
+        font2.setUnderline(true);
+        btn_forget->setFont(font2);
+        btn_forget->setLayoutDirection(Qt::RightToLeft);
+
+        gridLayout_2->addWidget(btn_forget, 1, 3, 1, 1);
+
+        verticalSpacer_4 = new QSpacerItem(20, 13, QSizePolicy::Minimum, QSizePolicy::Maximum);
+
+        gridLayout_2->addItem(verticalSpacer_4, 2, 3, 1, 1);
+
+        bin_login = new QPushButton(widget);
+        bin_login->setObjectName("bin_login");
+        bin_login->setMinimumSize(QSize(150, 50));
+        bin_login->setStyleSheet(QString::fromUtf8(""));
+
+        gridLayout_2->addWidget(bin_login, 3, 0, 1, 1);
+
+        cb_remember = new QCheckBox(widget);
+        cb_remember->setObjectName("cb_remember");
+
+        gridLayout_2->addWidget(cb_remember, 1, 0, 1, 1);
+
+
+        gridLayout->addWidget(widget, 6, 0, 1, 1);
+
+        verticalSpacer_5 = new QSpacerItem(20, 8, QSizePolicy::Minimum, QSizePolicy::Maximum);
+
+        gridLayout->addItem(verticalSpacer_5, 3, 0, 1, 1);
 
         QWidget::setTabOrder(le_username, le_password);
-        QWidget::setTabOrder(le_password, bin_login);
-        QWidget::setTabOrder(bin_login, btn_register);
+        QWidget::setTabOrder(le_password, btn_register);
 
         retranslateUi(Page_login);
 
@@ -186,15 +211,17 @@ public:
 #if QT_CONFIG(tooltip)
         Page_login->setToolTip(QCoreApplication::translate("Page_login", "\350\277\231\346\230\257\347\231\273\345\275\225\347\225\214\351\235\242", nullptr));
 #endif // QT_CONFIG(tooltip)
-        bin_login->setText(QCoreApplication::translate("Page_login", "Sign in", nullptr));
-        btn_register->setText(QCoreApplication::translate("Page_login", "Sign up", nullptr));
+        lb_title->setText(QCoreApplication::translate("Page_login", "Student \n"
+"Management System", nullptr));
         le_username->setPlaceholderText(QCoreApplication::translate("Page_login", "Please input your username", nullptr));
         lb2->setText(QCoreApplication::translate("Page_login", "Password", nullptr));
         lb1->setText(QCoreApplication::translate("Page_login", "username", nullptr));
         le_password->setPlaceholderText(QCoreApplication::translate("Page_login", "Please input your password", nullptr));
-        lb_title->setText(QCoreApplication::translate("Page_login", "Student \n"
-"Management System", nullptr));
         lb_image->setText(QString());
+        btn_register->setText(QCoreApplication::translate("Page_login", "Sign up", nullptr));
+        btn_forget->setText(QCoreApplication::translate("Page_login", "forget password?", nullptr));
+        bin_login->setText(QCoreApplication::translate("Page_login", "Sign in", nullptr));
+        cb_remember->setText(QCoreApplication::translate("Page_login", "remember", nullptr));
     } // retranslateUi
 
 };
