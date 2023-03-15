@@ -26,13 +26,15 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_Page_login_t {
-    uint offsetsAndSizes[12];
+    uint offsetsAndSizes[16];
     char stringdata0[11];
     char stringdata1[17];
     char stringdata2[1];
     char stringdata3[20];
-    char stringdata4[21];
-    char stringdata5[24];
+    char stringdata4[19];
+    char stringdata5[21];
+    char stringdata6[24];
+    char stringdata7[22];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Page_login_t::offsetsAndSizes) + ofs), len 
@@ -42,15 +44,19 @@ Q_CONSTINIT static const qt_meta_stringdata_Page_login_t qt_meta_stringdata_Page
         QT_MOC_LITERAL(11, 16),  // "sendLoginSuccess"
         QT_MOC_LITERAL(28, 0),  // ""
         QT_MOC_LITERAL(29, 19),  // "sendRegisterSUccess"
-        QT_MOC_LITERAL(49, 20),  // "on_bin_login_clicked"
-        QT_MOC_LITERAL(70, 23)   // "on_btn_register_clicked"
+        QT_MOC_LITERAL(49, 18),  // "sendRemeberSuccess"
+        QT_MOC_LITERAL(68, 20),  // "on_bin_login_clicked"
+        QT_MOC_LITERAL(89, 23),  // "on_btn_register_clicked"
+        QT_MOC_LITERAL(113, 21)   // "on_btn_forget_clicked"
     },
     "Page_login",
     "sendLoginSuccess",
     "",
     "sendRegisterSUccess",
+    "sendRemeberSuccess",
     "on_bin_login_clicked",
-    "on_btn_register_clicked"
+    "on_btn_register_clicked",
+    "on_btn_forget_clicked"
 };
 #undef QT_MOC_LITERAL
 } // unnamed namespace
@@ -61,26 +67,30 @@ Q_CONSTINIT static const uint qt_meta_data_Page_login[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   38,    2, 0x06,    1 /* Public */,
-       3,    0,   39,    2, 0x06,    2 /* Public */,
+       1,    0,   50,    2, 0x06,    1 /* Public */,
+       3,    0,   51,    2, 0x06,    2 /* Public */,
+       4,    0,   52,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,   40,    2, 0x08,    3 /* Private */,
-       5,    0,   41,    2, 0x08,    4 /* Private */,
+       5,    0,   53,    2, 0x08,    4 /* Private */,
+       6,    0,   54,    2, 0x08,    5 /* Private */,
+       7,    0,   55,    2, 0x08,    6 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -100,9 +110,13 @@ Q_CONSTINIT const QMetaObject Page_login::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'sendRegisterSUccess'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'sendRemeberSuccess'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_bin_login_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_btn_register_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_btn_forget_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -116,8 +130,10 @@ void Page_login::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->sendLoginSuccess(); break;
         case 1: _t->sendRegisterSUccess(); break;
-        case 2: _t->on_bin_login_clicked(); break;
-        case 3: _t->on_btn_register_clicked(); break;
+        case 2: _t->sendRemeberSuccess(); break;
+        case 3: _t->on_bin_login_clicked(); break;
+        case 4: _t->on_btn_register_clicked(); break;
+        case 5: _t->on_btn_forget_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -133,6 +149,13 @@ void Page_login::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             using _t = void (Page_login::*)();
             if (_t _q_method = &Page_login::sendRegisterSUccess; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (Page_login::*)();
+            if (_t _q_method = &Page_login::sendRemeberSuccess; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 2;
                 return;
             }
         }
@@ -159,13 +182,13 @@ int Page_login::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 6;
     }
     return _id;
 }
@@ -180,6 +203,12 @@ void Page_login::sendLoginSuccess()
 void Page_login::sendRegisterSUccess()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+}
+
+// SIGNAL 2
+void Page_login::sendRemeberSuccess()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

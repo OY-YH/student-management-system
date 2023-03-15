@@ -26,6 +26,7 @@ public:
 //        return ptrMain;
 //    }
     MainWindow(QWidget *parent = nullptr);
+//    void closeEvent(QCloseEvent *event);
     ~MainWindow();
 
     //设置界面美观,按压f6，进行变化

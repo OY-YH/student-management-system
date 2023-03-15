@@ -6,5 +6,6 @@
         <file>register.css</file>
         <file>login.jpg</file>
         <file>register.jpg</file>
+        <file>forget.css</file>
     </qresource>
 </RCC>
