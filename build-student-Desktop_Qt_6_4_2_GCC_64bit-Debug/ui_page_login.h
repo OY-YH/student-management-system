@@ -40,13 +40,15 @@ public:
     QWidget *widget;
     QGridLayout *gridLayout_2;
     QPushButton *btn_register;
-    QSpacerItem *horizontalSpacer_3;
-    QSpacerItem *verticalSpacer;
     QSpacerItem *horizontalSpacer_2;
-    QPushButton *btn_forget;
-    QSpacerItem *verticalSpacer_4;
     QPushButton *bin_login;
+    QPushButton *btn_forget;
+    QSpacerItem *horizontalSpacer_3;
+    QSpacerItem *verticalSpacer_4;
+    QSpacerItem *verticalSpacer;
     QCheckBox *cb_remember;
+    QSpacerItem *horizontalSpacer_4;
+    QSpacerItem *horizontalSpacer_5;
     QSpacerItem *verticalSpacer_5;
 
     void setupUi(QWidget *Page_login)
@@ -147,21 +149,22 @@ public:
         btn_register = new QPushButton(widget);
         btn_register->setObjectName("btn_register");
         btn_register->setMinimumSize(QSize(150, 50));
+        btn_register->setMaximumSize(QSize(150, 16777215));
         btn_register->setStyleSheet(QString::fromUtf8(""));
 
-        gridLayout_2->addWidget(btn_register, 3, 3, 1, 1);
+        gridLayout_2->addWidget(btn_register, 3, 4, 1, 1);
 
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        gridLayout_2->addItem(horizontalSpacer_3, 3, 4, 1, 1);
+        gridLayout_2->addItem(horizontalSpacer_2, 3, 3, 1, 1);
 
-        verticalSpacer = new QSpacerItem(20, 35, QSizePolicy::Minimum, QSizePolicy::Maximum);
+        bin_login = new QPushButton(widget);
+        bin_login->setObjectName("bin_login");
+        bin_login->setMinimumSize(QSize(150, 50));
+        bin_login->setMaximumSize(QSize(150, 16777215));
+        bin_login->setStyleSheet(QString::fromUtf8(""));
 
-        gridLayout_2->addItem(verticalSpacer, 4, 2, 1, 1);
-
-        horizontalSpacer_2 = new QSpacerItem(35, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_2->addItem(horizontalSpacer_2, 3, 2, 1, 1);
+        gridLayout_2->addWidget(bin_login, 3, 1, 1, 1);
 
         btn_forget = new QPushButton(widget);
         btn_forget->setObjectName("btn_forget");
@@ -172,23 +175,33 @@ public:
         btn_forget->setFont(font2);
         btn_forget->setLayoutDirection(Qt::RightToLeft);
 
-        gridLayout_2->addWidget(btn_forget, 1, 3, 1, 1);
+        gridLayout_2->addWidget(btn_forget, 1, 4, 1, 1);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_3, 3, 5, 1, 1);
 
         verticalSpacer_4 = new QSpacerItem(20, 13, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
-        gridLayout_2->addItem(verticalSpacer_4, 2, 3, 1, 1);
+        gridLayout_2->addItem(verticalSpacer_4, 2, 4, 1, 1);
 
-        bin_login = new QPushButton(widget);
-        bin_login->setObjectName("bin_login");
-        bin_login->setMinimumSize(QSize(150, 50));
-        bin_login->setStyleSheet(QString::fromUtf8(""));
+        verticalSpacer = new QSpacerItem(20, 35, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
-        gridLayout_2->addWidget(bin_login, 3, 0, 1, 1);
+        gridLayout_2->addItem(verticalSpacer, 4, 3, 1, 1);
 
         cb_remember = new QCheckBox(widget);
         cb_remember->setObjectName("cb_remember");
+        cb_remember->setMinimumSize(QSize(0, 40));
 
-        gridLayout_2->addWidget(cb_remember, 1, 0, 1, 1);
+        gridLayout_2->addWidget(cb_remember, 1, 1, 1, 1);
+
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_4, 3, 0, 1, 1);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_5, 1, 2, 1, 2);
 
 
         gridLayout->addWidget(widget, 6, 0, 1, 1);
@@ -219,8 +232,8 @@ public:
         le_password->setPlaceholderText(QCoreApplication::translate("Page_login", "Please input your password", nullptr));
         lb_image->setText(QString());
         btn_register->setText(QCoreApplication::translate("Page_login", "Sign up", nullptr));
-        btn_forget->setText(QCoreApplication::translate("Page_login", "forget password?", nullptr));
         bin_login->setText(QCoreApplication::translate("Page_login", "Sign in", nullptr));
+        btn_forget->setText(QCoreApplication::translate("Page_login", "forget password?", nullptr));
         cb_remember->setText(QCoreApplication::translate("Page_login", "remember", nullptr));
     } // retranslateUi
 
