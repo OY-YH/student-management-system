@@ -249,12 +249,18 @@ Management System</string>
       <property name="topMargin">
        <number>0</number>
       </property>
-      <item row="3" column="3">
+      <item row="3" column="4">
        <widget class="QPushButton" name="btn_register">
         <property name="minimumSize">
          <size>
           <width>150</width>
           <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -265,10 +271,13 @@ Management System</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="4">
-       <spacer name="horizontalSpacer_3">
+      <item row="3" column="3">
+       <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -278,36 +287,29 @@ Management System</string>
         </property>
        </spacer>
       </item>
-      <item row="4" column="2">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Maximum</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+      <item row="3" column="1">
+       <widget class="QPushButton" name="bin_login">
+        <property name="minimumSize">
          <size>
-          <width>20</width>
-          <height>35</height>
+          <width>150</width>
+          <height>50</height>
          </size>
         </property>
-       </spacer>
-      </item>
-      <item row="3" column="2">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+        <property name="maximumSize">
          <size>
-          <width>35</width>
-          <height>20</height>
+          <width>150</width>
+          <height>16777215</height>
          </size>
         </property>
-       </spacer>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Sign in</string>
+        </property>
+       </widget>
       </item>
-      <item row="1" column="3">
+      <item row="1" column="4">
        <widget class="QPushButton" name="btn_forget">
         <property name="minimumSize">
          <size>
@@ -334,7 +336,20 @@ Management System</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="3">
+      <item row="3" column="5">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="4">
        <spacer name="verticalSpacer_4">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -350,28 +365,60 @@ Management System</string>
         </property>
        </spacer>
       </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="bin_login">
-        <property name="minimumSize">
+      <item row="4" column="3">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Maximum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
          <size>
-          <width>150</width>
-          <height>50</height>
+          <width>20</width>
+          <height>35</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>Sign in</string>
-        </property>
-       </widget>
+       </spacer>
       </item>
-      <item row="1" column="0">
+      <item row="1" column="1">
        <widget class="QCheckBox" name="cb_remember">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
         <property name="text">
          <string>remember</string>
         </property>
        </widget>
+      </item>
+      <item row="3" column="0">
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="2" colspan="2">
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
